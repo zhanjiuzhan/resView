@@ -12,11 +12,11 @@ import java.util.List;
 /**
  * @author chenglei
  */
-public class MyUserDetail implements UserDetails {
+public class JcUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 7448215284148355835L;
 
-    private final Logger logger = LoggerFactory.getLogger(MyUserDetail.class);
+    private final Logger logger = LoggerFactory.getLogger(JcUserDetails.class);
 
     private String userName;
     private String password;
@@ -82,17 +82,17 @@ public class MyUserDetail implements UserDetails {
     }
 
 
-    public MyUserDetail setUserName(String userName) {
+    public JcUserDetails setUserName(String userName) {
         this.userName = userName;
         return this;
     }
 
-    public MyUserDetail setPassword(String password) {
+    public JcUserDetails setPassword(String password) {
         this.password = password;
         return this;
     }
 
-    public MyUserDetail setGrantedAuthoritys(List<GrantedAuthority> grantedAuthoritys) {
+    public JcUserDetails setGrantedAuthoritys(List<GrantedAuthority> grantedAuthoritys) {
         this.grantedAuthoritys = grantedAuthoritys;
         return this;
     }

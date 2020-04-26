@@ -4,6 +4,9 @@ import org.jpcl.resview.view.model.JsonRes;
 import org.jpcl.resview.view.resolver.impl.JcJsonViewResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Administrator
  */
@@ -11,35 +14,38 @@ public class JcJsonView extends ModelAndView {
 
     private JsonRes jsonRes;
 
-    public JcJsonView() {
+    /**
+     * 返回的code
+     */
+    private static Map<String, String> code = new HashMap() {
+        {
+            put("500", "服务器繁忙， 请稍后再试。");
+        }
+    };
+
+    {
         jsonRes = new JsonRes();
         super.setView(new JcJsonViewResolver(jsonRes));
     }
 
-    public JcJsonView(String data) {
-        this();
-        this.setData(data);
-    }
+    public JcJsonView() {}
 
-    public JcJsonView(Status status) {
-        this();
-        this.setJsonRes(status);
-    }
+    /*
+    public JcJsonView(String code) {
+        if (code == null || code.trim().length() < 3) {
+            return;
+        }
+        int retCode = Integer.valueOf(code.substring(0, 3));
+        if (retCode != 200) {
+            this.jsonRes.setStatus(retCode);
+            this.jsonRes.setMsg(JcJsonView.code.getOrDefault(code, "500"));
+        }
+    }*/
 
-    public JsonRes setStatus(int code) {
-        return this.jsonRes.setStatus(code);
-    }
-
-    public JsonRes setData(String data) {
-        return this.jsonRes.setData(data);
-    }
-
-    public JsonRes setMsg(String msg) {
-        return this.jsonRes.setMsg(msg);
-    }
-
-    public void setJsonRes(Status status) {
-        this.jsonRes.setStatus(status.getCode());
-        this.jsonRes.setMsg(status.getMsg());
+    public JcJsonView(Object data) {
+        if (data == null) {
+            return;
+        }
+        this.jsonRes.setData(data);
     }
 }

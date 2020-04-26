@@ -20,7 +20,8 @@ public class JcJsonViewResolver extends JcViewResolver {
 
     @Override
     protected void makeResponse(HttpServletResponse response) throws Exception {
-        String res = JSON.toJSONString(this.jsonObject);
+        Object dataObj = this.jsonObject.getData();
+        String res = "{status:" + this.jsonObject.getStatus() + ", data:" + JSON.toJSONString(dataObj) + ", msg:\"" + this.jsonObject.getMsg() + "\"}";
         response.setContentType("text/html; charset=utf-8");
         response.setContentLength(res.getBytes("UTF-8").length);
         // TODO xss攻击过滤

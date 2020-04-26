@@ -1,8 +1,5 @@
 package org.jpcl.resview.view.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Administrator
  */
@@ -12,19 +9,12 @@ public class JsonRes {
     private String msg;
 
     /**
-     * 返回的code
-     */
-    private static Map<Integer, String> code = new HashMap() {
-        {
-            put(500, "服务器忙， 请稍后再试。");
-        }
-    };
-
-    /**
      * 默认是200
      */
     public JsonRes() {
         this.status = 200;
+        this.msg = "";
+        this.data = "";
     }
 
     public int getStatus() {

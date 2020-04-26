@@ -5,6 +5,7 @@ import org.jpcl.resview.demo.model.User;
 import org.jpcl.resview.view.JcJsonView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,19 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/sample")
+@ComponentScan({"org.jpcl.resview.view.init"})
 public class SimpleController {
 
     Logger logger = LoggerFactory.getLogger(SimpleController.class);
     @RequestMapping("/getUser")
     public JcJsonView getUser() {
         logger.info("getUser {} {}", "aa", "s");
-        JcJsonView jc = new JcJsonView();
+
         User user = new User();
         user.setAge(11);
         user.setId("12331");
         user.setName("dw_chenglei");
-        jc.setJsonRes(Status.R500);
-        jc.setData(JSON.toJSONString(user));
+        JcJsonView jc = new JcJsonView(user);
         return jc;
     }
 }

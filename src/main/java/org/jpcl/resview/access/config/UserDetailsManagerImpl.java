@@ -1,35 +1,23 @@
 package org.jpcl.resview.access.config;
 
-import org.jcl.life.auth.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author chenglei
  */
 @Service
-public class MyUserDetailsManager implements UserDetailsService {
+public class UserDetailsManagerImpl implements UserDetailsService {
 
-    private final Logger logger = LoggerFactory.getLogger(MyUserDetailsManager.class);
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RoleService roleService;
+    private final Logger logger = LoggerFactory.getLogger(UserDetailsManagerImpl.class);
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        /*
         User user = userService.getUserByName(userName);
         if (null == user) {
             String log = "该 [" + userName + "] 用户不存在";
@@ -53,5 +41,8 @@ public class MyUserDetailsManager implements UserDetailsService {
                 .setGrantedAuthoritys(grantedAuthorities)
                 .setUserName(user.getUserName());
         return userDetails;
+
+         */
+        return null;
     }
 }
