@@ -29,12 +29,4 @@ public class JcJsonViewResolver extends JcAbstractViewResolver {
         out.write(res);
         out.flush();
     }
-
-    public JsonRes getJsonObject() {
-        return jsonObject;
-    }
-
-    public void setJsonObject(JsonRes jsonObject) {
-        this.jsonObject = jsonObject;
-    }
 }
