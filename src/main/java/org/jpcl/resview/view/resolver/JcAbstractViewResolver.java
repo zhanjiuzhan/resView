@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * @author Administrator
  */
-public abstract class JcViewResolver extends AbstractUrlBasedView {
+public abstract class JcAbstractViewResolver extends AbstractUrlBasedView {
 
     @Override
     protected void renderMergedOutputModel(Map<String, Object> map,

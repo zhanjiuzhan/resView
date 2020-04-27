@@ -2,7 +2,7 @@ package org.jpcl.resview.view.resolver.impl;
 
 import com.alibaba.fastjson.JSON;
 import org.jpcl.resview.view.model.JsonRes;
-import org.jpcl.resview.view.resolver.JcViewResolver;
+import org.jpcl.resview.view.resolver.JcAbstractViewResolver;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.Writer;
@@ -10,7 +10,7 @@ import java.io.Writer;
 /**
  * @author Administrator
  */
-public class JcJsonViewResolver extends JcViewResolver {
+public class JcJsonViewResolver extends JcAbstractViewResolver {
 
     private JsonRes jsonObject;
 

@@ -1,7 +1,7 @@
 package org.jpcl.resview.access.config;
 
-import com.alibaba.fastjson.JSON;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -20,7 +20,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * 用来配置security的权限认证
@@ -29,6 +28,7 @@ import java.io.PrintWriter;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
 
     @Resource
     private UserDetailsService myUserDetailsManager;
@@ -36,45 +36,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 进行权限配置
-        /*http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
+        http.authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasRole("USER")
-                .antMatchers("/app/**").permitAll();*/
-        http.authorizeRequests().anyRequest().permitAll();
-
-
-
-        //http.authorizeRequests().anyRequest().hasRole("USER")
-                //.and().sessionManagement().invalidSessionUrl("/login.html");
+                .antMatchers("/app/**").permitAll();
 
         // 开启自动配置的登陆功能，效果，如果没有登陆，没有权限就会来到登陆页面
-        /*http.formLogin().usernameParameter("userName").passwordParameter("password")
-                .loginPage("/login.html").permitAll()
+        http.formLogin().usernameParameter("userName").passwordParameter("password")
                 .loginProcessingUrl("/login")
                 .successHandler(getSuccessHandler()).failureHandler(getFailureHandler());
 
-        // 开启自动配置的注销功能
-        //http.logout().logoutSuccessUrl("/login.html");
-
-        // 开启记住我功能
-        //http.rememberMe().rememberMeParameter("remeber");
-
-        // 禁用缓存
-        //http.headers().cacheControl();
-
         // 关闭CSRF跨域
-        http.csrf().disable();*/
+        http.csrf().disable();
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/resources/**");
     }
-
-
-   /* @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(myUserDetailsManager).passwordEncoder(new BCryptPasswordEncoder());;
-    }*/
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -87,14 +66,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
              * 登录成功的处理
              * @param request
              * @param response
-             * @param authentication
+             * @param authentication 认证后用户的信息
              * @throws IOException
              * @throws ServletException
              */
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request,
                  HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
+                logger.info("登陆成功了");
             }
         };
     }
@@ -112,7 +91,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
              public void onAuthenticationFailure(HttpServletRequest request,
                   HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-
+                logger.info("登陆失败了");
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write(e.getMessage());
+                e.printStackTrace();
              }
         };
     }

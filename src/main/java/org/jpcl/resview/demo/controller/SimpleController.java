@@ -1,6 +1,5 @@
 package org.jpcl.resview.demo.controller;
 
-import com.alibaba.fastjson.JSON;
 import org.jpcl.resview.demo.model.User;
 import org.jpcl.resview.view.JcJsonView;
 import org.slf4j.Logger;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/sample")
-@ComponentScan({"org.jpcl.resview.view.init"})
+@ComponentScan({"org.jpcl.resview.view.init", "org.jpcl.resview.access"})
 public class SimpleController {
 
     Logger logger = LoggerFactory.getLogger(SimpleController.class);
