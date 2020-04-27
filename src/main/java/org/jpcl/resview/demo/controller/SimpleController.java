@@ -26,7 +26,7 @@ public class SimpleController {
         user.setAge(11);
         user.setId("12331");
         user.setName("dw_chenglei");
-        JcJsonView jc = new JcJsonView(user);
+        JcJsonView jc = new JcJsonView("5001");
         return jc;
     }
 }

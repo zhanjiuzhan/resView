@@ -13,13 +13,16 @@ import java.util.Map;
 public class JcJsonView extends ModelAndView {
 
     private JsonRes jsonRes;
+    private static final int SUCCESS_CODE = 200;
+    private static final String ERROR_CODE = "500";
+    private static final String ERROR_MSG = "服务器繁忙， 请稍后再试。";
 
     /**
      * 返回的code
      */
     private static Map<String, String> code = new HashMap() {
         {
-            put("500", "服务器繁忙， 请稍后再试。");
+            put(ERROR_CODE, ERROR_MSG);
         }
     };
 
@@ -30,22 +33,24 @@ public class JcJsonView extends ModelAndView {
 
     public JcJsonView() {}
 
-    /*
-    public JcJsonView(String code) {
-        if (code == null || code.trim().length() < 3) {
-            return;
-        }
-        int retCode = Integer.valueOf(code.substring(0, 3));
-        if (retCode != 200) {
-            this.jsonRes.setStatus(retCode);
-            this.jsonRes.setMsg(JcJsonView.code.getOrDefault(code, "500"));
-        }
-    }*/
-
     public JcJsonView(Object data) {
         if (data == null) {
             return;
         }
+        if (data instanceof String) {
+            if (code.containsKey(data)) {
+                errorCode((String) data);
+                return;
+            }
+        }
         this.jsonRes.setData(data);
+    }
+
+    private void errorCode(String code) {
+        int retCode = Integer.valueOf(code.substring(0, 3));
+        if (retCode != SUCCESS_CODE) {
+            this.jsonRes.setStatus(retCode);
+            this.jsonRes.setMsg(JcJsonView.code.getOrDefault(code, ERROR_MSG));
+        }
     }
 }
