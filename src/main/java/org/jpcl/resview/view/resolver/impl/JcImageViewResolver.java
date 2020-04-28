@@ -7,6 +7,9 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 
+/**
+ * @author Administrator
+ */
 public class JcImageViewResolver extends JcAbstractViewResolver {
 
     private ImageRes imageRes;

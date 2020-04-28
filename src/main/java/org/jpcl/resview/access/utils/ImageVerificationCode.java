@@ -9,13 +9,14 @@ import java.util.Random;
 
 /**
  * 图形验证码工具
+ * @author Administrator
  */
 public class ImageVerificationCode {
     private int weight = 100;
     private int height = 40;
     private String text;
     private Random r = new Random();
-    private String[] fontNames = {"宋体", "华文楷体", "黑体", "微软雅黑", "楷体_GB2312"};   //字体数组
+    private String[] fontNames = {"宋体", "华文楷体", "黑体", "微软雅黑", "楷体_GB2312"};
     private String codes = "23456789abcdefghjkmnopqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ";
 
     /**
@@ -56,7 +57,8 @@ public class ImageVerificationCode {
      * @param image
      */
     private void drawLine(BufferedImage image) {
-        int num = r.nextInt(10); //定义干扰线的数量
+        //定义干扰线的数量
+        int num = r.nextInt(10);
         Graphics2D g = (Graphics2D) image.getGraphics();
         for (int i = 0; i < num; i++) {
             int x1 = r.nextInt(weight);
@@ -90,7 +92,8 @@ public class ImageVerificationCode {
      */
     public BufferedImage getImage() {
         BufferedImage image = createImage();
-        Graphics2D g = (Graphics2D) image.getGraphics(); //获取画笔
+        //获取画笔
+        Graphics2D g = (Graphics2D) image.getGraphics();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 4; i++) {
             String s = randomChar()+ "";

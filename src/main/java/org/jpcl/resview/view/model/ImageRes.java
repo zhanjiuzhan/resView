@@ -4,6 +4,9 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 public class ImageRes {
     public static final String JPG = "jpg";
     public static final String PNG = "png";

@@ -6,6 +6,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * @author Administrator
+ */
 public class JcImageView extends ModelAndView {
 
     private ImageRes imageRes;
