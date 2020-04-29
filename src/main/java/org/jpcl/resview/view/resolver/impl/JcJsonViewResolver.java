@@ -21,8 +21,9 @@ public class JcJsonViewResolver extends JcAbstractViewResolver {
     @Override
     protected void makeResponse(HttpServletResponse response) throws Exception {
         Object dataObj = this.jsonObject.getData();
-        String res = "{status:" + this.jsonObject.getStatus() + ", data:" + JSON.toJSONString(dataObj) + ", msg:\"" + this.jsonObject.getMsg() + "\"}";
-        response.setContentType("text/html; charset=utf-8");
+        //String res = "{status:" + this.jsonObject.getStatus() + ", data:" + JSON.toJSONString(dataObj) + ", msg:\"" + this.jsonObject.getMsg() + "\"}";
+        String res = JSON.toJSONString(jsonObject);
+        response.setContentType("application/json; charset=utf-8");
         response.setContentLength(res.getBytes("UTF-8").length);
         // TODO xss攻击过滤
         Writer out = response.getWriter();
