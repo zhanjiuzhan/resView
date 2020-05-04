@@ -1,6 +1,7 @@
 package org.jpcl.resview.access.token;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.util.StringUtils;
@@ -49,22 +50,17 @@ public class JwtToken {
      * @param token
      * @return
      */
-    public static Claims getClaimByToken(String token) {
+    public static Claims getClaimByToken(String token) throws ExpiredJwtException {
         if (StringUtils.isEmpty(token)) {
             return null;
         }
 
         String[] header = token.split(TokenConst.BEARER);
         token = header[1];
-        try {
-            return Jwts.parser()
-                    .setSigningKey(TokenConst.SECRET)
-                    .parseClaimsJws(token)
-                    .getBody();
-        }catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+        return Jwts.parser()
+                .setSigningKey(TokenConst.SECRET)
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     /**

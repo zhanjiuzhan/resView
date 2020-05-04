@@ -1,7 +1,7 @@
 package org.jpcl.resview.demo.token;
 
 import org.jpcl.resview.access.LoginService;
-import org.jpcl.resview.access.UserModel;
+import org.jpcl.resview.access.security.JcUserDetails;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoginServiceImpl implements LoginService {
     @Override
-    public UserModel getUser(String userName) {
-        UserModel user = new UserModel() {};
+    public JcUserDetails getUser(String userName) {
+        JcUserDetails user = new JcUserDetails();
         user.setUsername("dw_chenglei");
         return user;
     }

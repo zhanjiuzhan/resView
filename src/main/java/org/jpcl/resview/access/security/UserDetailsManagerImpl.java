@@ -1,7 +1,9 @@
 package org.jpcl.resview.access.security;
 
+import org.jpcl.resview.access.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,9 +22,13 @@ public class UserDetailsManagerImpl implements UserDetailsService {
 
     private final Logger logger = LoggerFactory.getLogger(UserDetailsManagerImpl.class);
 
+    @Autowired
+    private LoginService<JcUserDetails> loginService;
+
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
+        JcUserDetails user = loginService.getUser(userName);
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_USER");

@@ -1,7 +1,11 @@
 package org.jpcl.resview.access.security;
 
+import com.alibaba.fastjson.JSON;
+import org.jpcl.resview.access.impl.AbstractLoginTrace;
+import org.jpcl.resview.view.model.JsonRes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -20,6 +24,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.Writer;
 
 /**
  * 用来配置security的权限认证
@@ -29,6 +34,11 @@ import java.io.IOException;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
+    private static final String USERNAME = "userName";
+    private static final String PASSWORD = "password";
+
+    @Autowired(required = false)
+    private AbstractLoginTrace loginTrace;
 
     @Resource
     private UserDetailsService myUserDetailsManager;
@@ -42,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/app/**").permitAll();
 
         // 开启自动配置的登陆功能，效果，如果没有登陆，没有权限就会来到登陆页面
-        http.formLogin().usernameParameter("userName").passwordParameter("password")
+        http.formLogin().usernameParameter(USERNAME).passwordParameter(PASSWORD)
                 .loginProcessingUrl("/login")
                 .successHandler(getSuccessHandler()).failureHandler(getFailureHandler());
 
@@ -73,7 +83,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request,
                  HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                logger.info("登陆成功了");
+                String userName = request.getParameter(USERNAME);
+                if (loginTrace != null) {
+                    loginTrace.loginTrace(userName, AbstractLoginTrace.LOGIN_SUCCESS);
+                }
+
+                JsonRes jsonRes = new JsonRes();
+                String res = JSON.toJSONString(jsonRes);
+                response.setContentType("application/json; charset=utf-8");
+                response.setContentLength(res.getBytes("UTF-8").length);
+                Writer out = response.getWriter();
+                out.write(res);
+                out.flush();
             }
         };
     }
@@ -91,9 +112,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
              public void onAuthenticationFailure(HttpServletRequest request,
                   HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-                logger.info("登陆失败了");
+                String userName = request.getParameter(USERNAME);
+                if (loginTrace != null) {
+                    loginTrace.loginTrace(userName, AbstractLoginTrace.LOGIN_FAIL + ":" + e.toString());
+                }
+
                 response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write(e.getMessage());
+                JsonRes jsonRes = new JsonRes();
+                jsonRes.setStatus(500);
+                jsonRes.setMsg(e.getMessage());
+                response.getWriter().write(JSON.toJSONString(jsonRes));
                 e.printStackTrace();
              }
         };

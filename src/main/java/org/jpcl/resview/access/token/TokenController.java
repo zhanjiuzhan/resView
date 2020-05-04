@@ -32,7 +32,7 @@ public class TokenController {
     @ExceptionHandler(value = {LoginException.class})
     public JcJsonView loginExceptionHandle(Model model, LoginException e) {
         if (loginTrace != null) {
-            loginTrace.loginTrace(e.getUsername(), e.toString());
+            loginTrace.loginTrace(e.getUsername(), AbstractLoginTrace.LOGIN_FAIL + "-" + e.toString());
         }
         JsonRes jsonRes = new JsonRes();
         jsonRes.setStatus(400);
@@ -57,6 +57,9 @@ public class TokenController {
 
         // 用户信息正确 生成一个token返回 每当用户登陆的时候都会生成一个token
         String token = tokenService.generateToken(userModel.getUsername());
+        if (loginTrace != null) {
+            loginTrace.loginTrace(userName, AbstractLoginTrace.LOGIN_SUCCESS);
+        }
         return new JcJsonView(token);
     }
 

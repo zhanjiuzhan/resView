@@ -3,6 +3,8 @@ package org.jpcl.resview.access.token;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.Claims;
 import org.jpcl.resview.view.model.JsonRes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +17,8 @@ import java.util.UUID;
  * @author Administrator
  */
 public abstract class AbstractTokenService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 取得一个UUID当作 加密的key 没用
@@ -47,7 +51,12 @@ public abstract class AbstractTokenService {
         }
 
         // 这个token是否正确 并且是否过期
-        Claims claims = JwtToken.getClaimByToken(authHeader);
+        Claims claims = null;
+        try {
+            claims = JwtToken.getClaimByToken(authHeader);
+        } catch (Exception e) {
+            logger.warn(e.toString());
+        }
         if (claims == null || JwtToken.isTokenExpired(claims.getExpiration())) {
             return null;
         }
@@ -87,7 +96,7 @@ public abstract class AbstractTokenService {
     public void accessFailue(HttpServletResponse response) throws IOException {
         JsonRes jsonRes = new JsonRes();
         jsonRes.setStatus(401);
-        jsonRes.setMsg("没有权限");
+        jsonRes.setMsg("认证不通过，或认证超时，或用户无权访问。");
         String res = JSON.toJSONString(jsonRes);
         response.setContentType("application/json; charset=utf-8");
         response.setContentLength(res.getBytes("UTF-8").length);

@@ -3,12 +3,12 @@ package org.jpcl.resview.access;
 /**
  * @author Administrator
  */
-public interface LoginService {
+public interface LoginService<T extends UserModel> {
 
     /**
      * 返回对应用户名的用户信息
      * @param userName
      * @return
      */
-    UserModel getUser(String userName);
+    T getUser(String userName);
 }
