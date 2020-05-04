@@ -33,6 +33,12 @@ public class JcJsonView extends ModelAndView {
 
     public JcJsonView() {}
 
+    public JcJsonView(JsonRes jsonRes) {
+        this.jsonRes.setData(jsonRes.getData());
+        this.jsonRes.setMsg(jsonRes.getMsg());
+        this.jsonRes.setStatus(jsonRes.getStatus());
+    }
+
     public JcJsonView(Object data) {
         if (data == null) {
             return;

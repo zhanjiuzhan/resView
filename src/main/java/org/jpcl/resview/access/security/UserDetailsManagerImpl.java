@@ -1,4 +1,4 @@
-package org.jpcl.resview.access.config;
+package org.jpcl.resview.access.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +32,9 @@ public class UserDetailsManagerImpl implements UserDetailsService {
         grantedAuthorities.add(grantedAuthority);
 
         JcUserDetails userDetails = new JcUserDetails();
-        userDetails.setPassword("123456")
-                .setGrantedAuthoritys(grantedAuthorities)
-                .setUserName("user");
+        userDetails.setPassword("123456");
+        userDetails.setGrantedAuthorities(grantedAuthorities);
+        userDetails.setUsername("user");;
         return userDetails;
     }
 }

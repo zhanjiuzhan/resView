@@ -1,4 +1,4 @@
-package org.jpcl.resview.access.config;
+package org.jpcl.resview.access.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
