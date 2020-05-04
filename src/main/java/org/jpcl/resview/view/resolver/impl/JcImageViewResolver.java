@@ -20,12 +20,18 @@ public class JcImageViewResolver extends JcAbstractViewResolver {
 
     @Override
     protected void makeResponse(HttpServletResponse response) throws Exception {
-        if (this.imageRes.getType() == ImageRes.JPG) {
-            response.setContentType("image/jpeg");
-        } else {
-            // TODO
-        }
+
         OutputStream out = response.getOutputStream();
         ImageIO.write(this.imageRes.getImg(), this.imageRes.getType(), out);
+    }
+
+    @Override
+    protected String getContentSpType() {
+        if (this.imageRes.getType() == ImageRes.JPG) {
+            return "image/jpeg";
+        } else {
+            // TODO
+            return "";
+        }
     }
 }

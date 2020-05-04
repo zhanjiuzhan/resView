@@ -1,7 +1,6 @@
 package org.jpcl.resview.view.resolver.impl;
 
-import com.alibaba.fastjson.JSON;
-import org.jpcl.resview.view.model.JsonRes;
+import org.jpcl.resview.view.model.TextRes;
 import org.jpcl.resview.view.resolver.JcAbstractViewResolver;
 
 import javax.servlet.http.HttpServletResponse;
@@ -10,18 +9,16 @@ import java.io.Writer;
 /**
  * @author Administrator
  */
-public class JcJsonViewResolver extends JcAbstractViewResolver {
+public class JcTextViewResolver  extends JcAbstractViewResolver {
+    private TextRes textRes;
 
-    private JsonRes jsonObject;
-
-    public JcJsonViewResolver(JsonRes obj) {
-        this.jsonObject = obj;
+    public JcTextViewResolver(TextRes textRes) {
+        this.textRes = textRes;
     }
 
     @Override
     protected void makeResponse(HttpServletResponse response) throws Exception {
-        Object dataObj = this.jsonObject.getData();
-        String res = JSON.toJSONString(jsonObject);
+        String res = textRes.getMessage();
         response.setContentLength(res.getBytes("UTF-8").length);
         Writer out = response.getWriter();
         out.write(res);
@@ -30,6 +27,6 @@ public class JcJsonViewResolver extends JcAbstractViewResolver {
 
     @Override
     protected String getContentSpType() {
-        return "application/json; charset=utf-8";
+        return "text/plain; charset=UTF-8";
     }
 }

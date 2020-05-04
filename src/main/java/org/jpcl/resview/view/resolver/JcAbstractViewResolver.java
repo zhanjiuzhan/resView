@@ -14,6 +14,8 @@ public abstract class JcAbstractViewResolver extends AbstractUrlBasedView {
     @Override
     protected void renderMergedOutputModel(Map<String, Object> map,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType(getContentSpType());
+        // TODO xss攻击过滤
         makeResponse(response);
     }
 
@@ -23,4 +25,10 @@ public abstract class JcAbstractViewResolver extends AbstractUrlBasedView {
      * @throws Exception
      */
     protected abstract void makeResponse(HttpServletResponse response) throws Exception;
+
+    /**
+     * 指定返回的contentType
+     * @return
+     */
+    protected abstract String getContentSpType();
 }
