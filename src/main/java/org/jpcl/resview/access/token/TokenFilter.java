@@ -1,7 +1,7 @@
 package org.jpcl.resview.access.token;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -14,7 +14,7 @@ import java.io.IOException;
  * 用户拦截
  * @author Administrator
  */
-@Controller
+@Component
 public class TokenFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -25,7 +25,7 @@ public class TokenFilter extends OncePerRequestFilter {
         HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String url = request.getRequestURI();
         String authHeader = request.getHeader("Authorization");
-        if (url.contains("/login")) {
+        if (url.contains("/token/login")) {
             filterChain.doFilter(request, response);
         } else {
             if (tokenService.isAuthentication(url, authHeader)) {

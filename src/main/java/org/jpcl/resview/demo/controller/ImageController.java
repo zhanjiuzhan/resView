@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 @Controller
 @RequestMapping("/image")
 public class ImageController {
-
     @RequestMapping("/get")
     public JcImageView getImage() throws Exception {
         ImageVerificationCode image = new ImageVerificationCode();

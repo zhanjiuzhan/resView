@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Administrator
  */
 @Controller
+@RequestMapping("/token")
 public class TokenController {
 
     @Autowired
