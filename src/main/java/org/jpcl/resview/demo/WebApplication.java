@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author Administrator
  */
 @SpringBootApplication
+@ComponentScan({"org.jpcl.resview.jsonp", "org.jpcl.resview.view.init", "org.jpcl.resview.scheduled", "org.jpcl.resview.demo"})
 public class WebApplication {
     public static void main(String[] args) {
         SpringApplication.run(WebApplication.class);

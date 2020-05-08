@@ -4,7 +4,6 @@ import org.jpcl.resview.demo.model.User;
 import org.jpcl.resview.view.JcJsonView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/sample")
-//@ComponentScan({"org.jpcl.resview.view.init", "org.jpcl.resview.access"})
 @CrossOrigin(origins = "*")
 public class SimpleController {
 
