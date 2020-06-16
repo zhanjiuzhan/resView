@@ -18,7 +18,7 @@
 2. 基于WebMvcConfigurerAdapter配置加入Cors的跨域
     ```java
     @Configuration 
-    public class CorsConfig extends WebMvcConfigurerAdapter { 
+    public class CorsConfig implements WebMvcConfigurer  { 
         @Override 
         public void addCorsMappings(CorsRegistry registry) { 
             registry.addMapping("/**") 

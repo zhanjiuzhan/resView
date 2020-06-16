@@ -43,7 +43,11 @@ public class JcJsonView extends ModelAndView {
         if (data == null) {
             return;
         }
-        if (data instanceof String) {
+        if (data instanceof String || data instanceof Integer) {
+            if (data instanceof Integer) {
+                data = String.valueOf(data);
+            }
+
             if (code.containsKey(data)) {
                 errorCode((String) data);
                 return;
