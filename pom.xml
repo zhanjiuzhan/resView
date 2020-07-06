@@ -6,7 +6,11 @@
 
     <groupId>org.jpcl.resView</groupId>
     <artifactId>resView</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>resView-文件上传</module>
+    </modules>
 
     <!--
     依赖管理器 管理boot需要的所有依赖，从而统一各种jar的版本号，避免了版本不一致而出现的问题
@@ -58,10 +62,10 @@
         </dependency>
 
         <!-- security的依赖 -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- swagger2的使用 -->
         <dependency>
