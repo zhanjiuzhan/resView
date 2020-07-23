@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>resView-文件上传</module>
+        <module>resView-Excel的上传下载</module>
     </modules>
 
     <!--

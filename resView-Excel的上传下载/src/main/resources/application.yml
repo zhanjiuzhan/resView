@@ -1,8 +1,9 @@
 server:
-  port: 8083
-  servlet:
-    context-path: /upload
+  port: 8084
+
 spring:
+  resources:
+    static-locations: classpath:/view/
   servlet:
     multipart:
       max-file-size: 1MB

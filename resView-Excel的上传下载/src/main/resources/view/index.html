@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Excel文件的上传和下载</title>
+</head>
+<body>
+    <h3>上传Excel文件</h3><hr>
+    <form action="/import.do" method="post" enctype="multipart/form-data">
+        <input type="file" name="file"/>
+        <input type="submit" value="上传"/>
+    </form>
+    <h3>下载Excel文件</h3>
+    <hr>
+    <a href="/export.do">下载文件</a>
+</body>
+</html>
