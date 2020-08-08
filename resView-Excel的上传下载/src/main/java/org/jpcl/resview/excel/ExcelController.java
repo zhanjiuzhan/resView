@@ -20,8 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,10 +35,16 @@ public class ExcelController {
 
     @PostMapping("/import.do")
     @ResponseBody
-    public String upload(HttpServletRequest request) {
+    public String upload(HttpServletRequest request) throws IOException {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile excel = multipartRequest.getFile("file");
-        List<Student> excelData = ExcelUtil.readExcelObject(excel, Student.class);
+        List<AssignUser> excelData = ExcelUtil.readExcelObject(excel.getInputStream(), excel.getOriginalFilename(), AssignUser.class);
+        List<String> sqls = new ArrayList<>();
+        for (AssignUser user : excelData) {
+            StringBuilder sbr = new StringBuilder("INSERT INTO ");
+        }
+
+
         return JSONObject.toJSONString(excelData);
     }
 

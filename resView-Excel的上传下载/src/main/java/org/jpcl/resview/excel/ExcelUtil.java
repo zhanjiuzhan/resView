@@ -9,26 +9,31 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * @author Administrator
  */
 public class ExcelUtil {
-    public static <T extends Object> List<T> readExcelObject(MultipartFile file, Class<T> clazz) {
+    /**
+     * 读取Excel的文件内容 用来转换成对象的
+     * @param inputStream
+     * @param fileName
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T extends Object> List<T> readExcelObject(InputStream inputStream, String fileName, Class<T> clazz) {
         List<T> list = new ArrayList<>();
         Workbook workbook = null;
-        InputStream inputStream = null;
-        try {
-            inputStream = file.getInputStream();
-        } catch (Exception e) {
-            throw new RuntimeException("文件读取异常");
-        }
 
-        if (file.getOriginalFilename().endsWith(".xls")) {
+        if (fileName.endsWith(".xls")) {
             workbook = xls(inputStream);
-        } else if (file.getOriginalFilename().endsWith("xlsx")) {
+        } else if (fileName.endsWith("xlsx")) {
             workbook = xlsx(inputStream);
         } else {
             throw new RuntimeException("非Excel文件");
@@ -40,7 +45,7 @@ public class ExcelUtil {
         // 取得总行数
         int rows = sheet.getLastRowNum() + 1;
         Field[] fields = clazz.getDeclaredFields();
-        for (int i = 1; i < rows; i++) {
+        for (int i = 1; i < 4794; i++) {
             Row row = sheet.getRow(i);
             //此处用来过滤空行
             Cell cell0 = row.getCell( 0);
@@ -79,7 +84,6 @@ public class ExcelUtil {
 
     private static void setFieldValue(Object obj, Field f, Cell cell) {
         try {
-            cell.setCellType(CellType.STRING);
             if (f.getType() == byte.class || f.getType() == Byte.class) {
                 f.set(obj, Byte.parseByte(cell.getStringCellValue()));
             } else if (f.getType() == int.class || f.getType() == Integer.class) {
@@ -88,12 +92,37 @@ public class ExcelUtil {
                 f.set(obj, Double.parseDouble(cell.getStringCellValue()));
             } else if (f.getType() == BigDecimal.class) {
                 f.set(obj, new BigDecimal(cell.getStringCellValue()));
+            } else if (f.getType() == long.class) {
+                f.set(obj, new Long(cell.getStringCellValue()));
             } else {
-                f.set(obj, cell.getStringCellValue());
+                String str = importByExcelForDate(cell);
+                f.set(obj, str);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static String importByExcelForDate(Cell currentCell) {
+        String currentCellValue = "";
+        // 判断单元格数据是否是日期
+        if ("yyyy-mm-dd;@".equals(currentCell.getCellStyle().getDataFormatString())
+                || "m/d/yy".equals(currentCell.getCellStyle().getDataFormatString())
+                || "yy/m/d".equals(currentCell.getCellStyle().getDataFormatString())
+                || "mm/dd/yy".equals(currentCell.getCellStyle().getDataFormatString())
+                || "dd-mmm-yy".equals(currentCell.getCellStyle().getDataFormatString())
+                || "yyyy/m/d".equals(currentCell.getCellStyle().getDataFormatString())) {
+            if (DateUtil.isCellDateFormatted(currentCell)) {
+                // 用于转化为日期格式
+                Date d = currentCell.getDateCellValue();
+                DateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+                currentCellValue = formater.format(d);
+            }
+        } else {
+            // 不是日期原值返回
+            currentCellValue = currentCell.toString();
+        }
+        return currentCellValue;
     }
 
     /**
