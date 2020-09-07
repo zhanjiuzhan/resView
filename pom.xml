@@ -11,6 +11,7 @@
     <modules>
         <module>resView-文件上传</module>
         <module>resView-Excel的上传下载</module>
+        <module>resView-异常处理</module>
     </modules>
 
     <!--
