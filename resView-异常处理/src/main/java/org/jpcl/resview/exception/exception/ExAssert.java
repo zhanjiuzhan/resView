@@ -4,14 +4,14 @@ package org.jpcl.resview.exception.exception;
  * 一个专门处理自定义异常的断言
  * @author Administrator
  */
-public interface MyExAssert {
+public interface ExAssert {
 
     /**
      * 创建异常
      * @param args
      * @return
      */
-    MySelfException newException(Object... args);
+    MyDefException newException(Object... args);
 
     /**
      * 创建异常
@@ -19,7 +19,7 @@ public interface MyExAssert {
      * @param args
      * @return
      */
-    MySelfException newException(Throwable t, Object... args);
+    MyDefException newException(Throwable t, Object... args);
 
     /**
      * 断言该对象不能为空对象
@@ -31,7 +31,7 @@ public interface MyExAssert {
             throw newException();
         }
         if (obj instanceof String) {
-            if (((String) obj).trim().length() == 0) {
+            if (((String) obj).length() == 0) {
                 throw newException();
             }
         }
@@ -49,9 +49,31 @@ public interface MyExAssert {
             throw newException(args);
         }
         if (obj instanceof String) {
-            if (((String) obj).trim().length() == 0) {
+            if (((String) obj).length() == 0) {
                 throw newException(args);
             }
+        }
+    }
+
+    /**
+     * 断言是否True，是True则测试用例通过。
+     * @param isTrue
+     * @param args
+     */
+    default void assertTrue(boolean isTrue, Object... args) {
+        if (!isTrue) {
+            throw newException(args);
+        }
+    }
+
+    /**
+     * 断言是否False，是False则测试用例通过。
+     * @param isTrue
+     * @param args
+     */
+    default void assertFalse(boolean isTrue, Object... args) {
+        if (isTrue) {
+            throw newException(args);
         }
     }
 }

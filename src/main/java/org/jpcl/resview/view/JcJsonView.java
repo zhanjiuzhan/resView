@@ -15,12 +15,12 @@ public class JcJsonView extends ModelAndView {
     private JsonRes jsonRes;
     private static final int SUCCESS_CODE = 200;
     private static final String ERROR_CODE = "500";
-    private static final String ERROR_MSG = "服务器繁忙， 请稍后再试。";
+    public static final String ERROR_MSG = "服务器繁忙， 请稍后再试。";
 
     /**
      * 返回的code
      */
-    private static Map<String, String> code = new HashMap() {
+    private static Map<String, String> code = new HashMap<String, String>() {
         {
             put(ERROR_CODE, ERROR_MSG);
         }

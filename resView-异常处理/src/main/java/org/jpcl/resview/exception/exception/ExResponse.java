@@ -3,7 +3,7 @@ package org.jpcl.resview.exception.exception;
 /**
  * @author Administrator
  */
-public interface MyExResponseEnum {
+public interface ExResponse {
     /**
      * 取得错误码
      * @return
