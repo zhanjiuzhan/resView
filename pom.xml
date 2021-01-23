@@ -12,6 +12,9 @@
         <module>resView-文件上传</module>
         <module>resView-Excel的上传下载</module>
         <module>resView-异常处理</module>
+        <module>resView-SpringBoot</module>
+        <module>Bean的生命周期</module>
+        <module>代理</module>
     </modules>
 
     <!--
