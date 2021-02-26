@@ -1,0 +1,25 @@
+﻿durable:  持久, 持久化
+exclusive: 专有, 独有, 专用的, 独占的, 个人的
+direct: 直, 直接, 直连
+manual: 手动
+aware: 后缀, 带此后缀的接口, 为可以取到该接口名对应的值
+automatic 自动的
+deduce: 推断
+present: 当下, 当前, 现在, 现
+primary: 主, 主要的
+configurable: 可配置的
+primitive: 原始的
+resolve: 解析, 解决, 分析
+Resolvable: 可解决的
+Mutable: 可变的 易变的
+prepare: 准备
+absent: 不在
+obtain: 获得
+Fresh: 新鲜的
+Generic: 泛型
+Delegate: 代表
+regular: 定期的
+registry: 注册的
+Processor：处理器
+Frozen：冻结
+customize：定制的

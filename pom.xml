@@ -15,6 +15,9 @@
         <module>resView-SpringBoot</module>
         <module>Bean的生命周期</module>
         <module>代理</module>
+        <module>springboot源码分析</module>
+        <module>手写spring</module>
+        <module>IO</module>
     </modules>
 
     <!--
