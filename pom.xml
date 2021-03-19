@@ -18,6 +18,7 @@
         <module>springboot源码分析</module>
         <module>手写spring</module>
         <module>IO</module>
+        <module>排序算法</module>
     </modules>
 
     <!--

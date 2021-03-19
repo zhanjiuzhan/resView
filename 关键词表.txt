@@ -23,3 +23,8 @@ registry: 注册的
 Processor：处理器
 Frozen：冻结
 customize：定制的
+Dispose: 处理, 安排
+
+
+
+
